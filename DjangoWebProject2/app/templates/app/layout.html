@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="{% static 'app/css/style.css' %}">
 </head>
 <body>
+    {% if not is_registration_page %}
     <header>
         <a href="/" class="navbar-brand">
             <img src="{% static 'app/content/logo.png' %}" alt="logo" width="100" height="100">
@@ -17,12 +18,13 @@
 
     <nav>
         <ul>
-            <li><a href="/">Главная</a></li>
+            <li><a href="{% url 'index' %}">Главная</a></li>
             <li><a href="{% url 'contact' %}">Контакты</a></li>
             <li><a href="{% url 'about' %}">О нас</a></li>
             <li><a href="{% url 'links' %}">Полезные ресурсы</a></li>
         </ul>
     </nav>
+    {% endif %}
 
     <div>
         {% block content %}

@@ -3,7 +3,6 @@ from django.http import HttpRequest
 from django.contrib.auth.forms import UserCreationForm
 from datetime import datetime
 
-# Главная страница
 def home(request):
     """Главная страница сайта"""
     assert isinstance(request, HttpRequest)
@@ -16,7 +15,9 @@ def home(request):
         }
     )
 
-# Страница "Полезные ресурсы"
+def login(request):
+    return render(request, 'app/login.html')
+
 def links(request):
     """Страница с полезными ссылками и ресурсами"""
     assert isinstance(request, HttpRequest)
@@ -51,7 +52,10 @@ def about(request):
         }
     )
 
-# Страница регистрации
+
+    
+    return render(request, 'app/login.html', {'form': form})
+
 def registration(request):
     """Страница регистрации нового пользователя"""
     assert isinstance(request, HttpRequest)
@@ -65,14 +69,16 @@ def registration(request):
             reg_f.date_joined = datetime.now()
             reg_f.last_login = datetime.now()
             reg_f.save()
-            return redirect('home')
+            return redirect('login')
     else:
         regform = UserCreationForm()
+
     return render(
         request,
-        'app/registration.html',
+        'app/registration.html',  # Используем шаблон для страницы регистрации
         {
             'regform': regform,
             'year': datetime.now().year,
+            'is_registration_page': True  # Передаем флаг, чтобы скрыть меню
         }
     )
